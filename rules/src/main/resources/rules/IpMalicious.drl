@@ -1,0 +1,12 @@
+package com.securehome
+ 
+import rs.securehome.admin.model.events.IpMalicious;
+ 
+rule "Pojava loga u kom se nalazi IP adresa sa spiska malicioznih IP adresa"
+    no-loop true
+    when
+        $ipMalicious: IpMalicious(ipAddress memberOf maliciousIps, $isMalicious: isMalicious)
+    then
+        // System.out.println("Malicious IP..");
+        modify ($ipMalicious) { setIsMalicious(true) };
+end

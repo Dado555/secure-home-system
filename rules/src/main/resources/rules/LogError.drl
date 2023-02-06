@@ -1,0 +1,11 @@
+package com.securehome
+ 
+import rs.securehome.admin.model.events.LogError;
+ 
+rule "Detektovan log tipa error"
+    no-loop true
+    when
+        log : LogError($ipAddress: ipAddress, $message: message, $component: component, $username: username)
+    then
+        System.out.println("Ip address: " +  $ipAddress + ", message: " + $message + ", component: " + $component + ", username: " + $username);
+end

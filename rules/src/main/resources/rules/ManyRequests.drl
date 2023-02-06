@@ -1,0 +1,16 @@
+package com.securehome
+ 
+import rs.securehome.admin.model.events.ManyRequests;
+ 
+rule "Detekcija suviše učestalih zahtjeva"
+    no-loop true
+    when
+        $requests: ManyRequests($ipAddress: ipAddress)
+        Number(intValue > 10) from accumulate (
+            $req: ManyRequests(ipAddress.equals($ipAddress)) from $requests,
+            count($req)
+        )
+    then
+        // System.out.println("Previse zahtjeva!");
+        modify ($requests) { setIsTooMuch(true) };
+end

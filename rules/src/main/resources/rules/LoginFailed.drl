@@ -1,0 +1,11 @@
+package com.securehome
+ 
+import rs.securehome.admin.model.events.LoginFailed;
+ 
+rule "Neupsjesna prijava - pogresna lozinka"
+    no-loop true
+    when
+        log : LoginFailed($userEmail: userEmail, $attemptTime: attemptTime)
+    then
+        System.out.println("User email: " +  $userEmail + ", attempt time: " + $attemptTime);
+end
